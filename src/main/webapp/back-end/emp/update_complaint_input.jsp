@@ -1,195 +1,177 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.complaint.model.*"%>
 
-<% //¨£com.emp.controller.EmpServlet.java²Ä163¦æ¦s¤JreqªºcomplaintVOª«¥ó (¦¹¬°±q¸ê®Æ®w¨ú¥XªºcomplaintVO, ¤]¥i¥H¬O¿é¤J®æ¦¡¦³¿ù»~®ÉªºcomplaintVOª«¥ó)
-ComplaintVO complaintVO = (ComplaintVO) request.getAttribute("complaintVO");
+<%
+    ComplaintVO complaintVO = (ComplaintVO) request.getAttribute("complaintVO");
 %>
---<%= complaintVO==null %>--${complaintVO.deptno}--<!-- line 100 --><html>
 
-<html>
+<html lang="zh">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>¥Ó¶D¸ê®Æ­×§ï - update_emp_input.jsp</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ç”³è¨´è³‡æ–™ä¿®æ”¹ - æ›´æ–°ç”³è¨´æ¡ˆä»¶</title>
 
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+    <!-- å¼•å…¥ Google å­—å‹ -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-<style>
-  table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-</style>
+    <!-- å¼•å…¥ Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- å¼•å…¥ FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            padding-top: 40px;
+        }
+
+        h3 {
+            color: #333;
+            font-weight: 700;
+            font-size: 36px;
+        }
+
+        h4 {
+            color: #007BFF;
+        }
+
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+        }
+
+        .card {
+            margin-top: 20px;
+            padding: 30px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: #007BFF;
+            border-color: #007BFF;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+            transform: translateY(-2px);
+        }
+
+        .alert-danger {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 35px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-<body bgcolor='white'>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>¥Ó¶D¸ê®Æ­×§ï - update_complaint_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
-	</td></tr>
-</table>
+<body>
 
-<h3>¸ê®Æ­×§ï:</h3>
+    <div class="container">
+        <div class="row mb-4 text-center">
+            <div class="col-12">
+                <h3>ç”³è¨´è³‡æ–™ä¿®æ”¹</h3>
+                <h4>
+                    <a href="select_page.jsp"><img src="<%=request.getContextPath()%>/back-end/images/back1.gif" width="100" height="32" border="0"> å›é¦–é </a>
+                </h4>
+            </div>
+        </div>
 
-<%-- ¿ù»~ªí¦C --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+        <!-- é”™è¯¯æ¶ˆæ¯æ˜¾ç¤ºåŒºåŸŸ -->
+        <c:if test="${not empty errorMsgs}">
+            <div class="alert alert-danger">
+                <strong>è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</strong>
+                <ul>
+                    <c:forEach var="message" items="${errorMsgs}">
+                        <li>${message}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 
-<FORM METHOD="post" ACTION="emp.do" name="form1">
-<table>
-	<tr>
-		<td>®×¥ó½s¸¹:<font color=red><b>*</b></font></td>
-		<td><%=complaintVO.getComplaintId()%></td>
-	</tr>
-	<tr>
-		<td>®×¥ó¦WºÙ:</td>
-		<td><input type="TEXT" name="ename" value="<%=complaintVO.getEname()%>" size="45"/></td>
-	</tr>
-	<tr>
-		<td>Â¾¦ì:</td>
-		<td><input type="TEXT" name="job"   value="<%=complaintVO.getJob()%>" size="45"/></td>
-	</tr>
-	<tr>
-		<td>¶±¥Î¤é´Á:</td>
-		<td><input name="hiredate" id="f_date1" type="text" ></td> 
-	</tr>
-	<tr>
-		<td>Á~¤ô:</td>
-		<td><input type="TEXT" name="sal"   value="<%=complaintVO.getSal()%>" size="45"/></td>
-	</tr>
-	<tr>
-		<td>¼úª÷:</td>
-		<td><input type="TEXT" name="comm"  value="<%=complaintVO.getComm()%>" size="45"/></td>
-	</tr>
+        <!-- ç”³è¨´è³‡æ–™ä¿®æ”¹è¡¨å–® -->
+        <div class="card">
+            <form method="post" action="emp.do" name="form1">
+                <div class="form-group">
+                    <label for="complaintIdInput">ç”³è¨´ç·¨è™Ÿ:</label>
+                    <input type="text" class="form-control" name="complaintId" value="<%=complaintVO.getComplaintId()%>" readonly />
+                </div>
 
-<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.ComplaintService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>³¡ªù:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(complaintVO.deptno==deptVO.deptno)?'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
+                <div class="form-group">
+                    <label for="memberIdInput">æœƒå“¡ç·¨è™Ÿ:</label>
+                    <input type="text" class="form-control" name="memberId" value="<%=complaintVO.getMemberId()%>" readonly />
+                </div>
 
-</table>
-<br>
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="complaintId" value="<%=complaintVO.getComplaintId()%>">
-<input type="submit" value="°e¥X­×§ï"></FORM>
+                <div class="form-group">
+                    <label for="caseIdInput">æ¡ˆä»¶ç·¨è™Ÿ:</label>
+                    <input type="text" class="form-control" name="caseId" value="<%=complaintVO.getCaseId()%>" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="complaintConInput">ç”³è¨´æ¡ˆä»¶å…§å®¹:</label>
+                    <textarea class="form-control" name="complaintCon" rows="4" readonly><%=complaintVO.getComplaintCon()%></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="complaintTimeInput">ç”³è¨´æ—¥æœŸ:</label>
+                    <input type="text" class="form-control" name="complaintTime" value="<%=complaintVO.getComplaintTime()%>" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="complaintStatusInput">ç”³è¨´ç‹€æ…‹:</label><br>
+                    <input type="radio" name="complaintStatus" value="0" <c:if test="${complaintVO.complaintStatus == 0}">checked</c:if> /> è™•ç†æˆåŠŸ
+                    <input type="radio" name="complaintStatus" value="1" <c:if test="${complaintVO.complaintStatus == 1}">checked</c:if> /> è™•ç†å¤±æ•—
+                </div>
+
+                <div class="form-group">
+                    <label for="complaintResultInput">è™•ç†çµæœ:</label>
+                    <input type="text" class="form-control" name="complaintResult" value="<%=complaintVO.getComplaintResult()%>" />
+                </div>
+
+                <input type="hidden" name="action" value="update">
+                <button type="submit" class="btn btn-primary">é€å‡ºä¿®æ”¹</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- å¼•å…¥ Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
-
-
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=complaintVO.getComplainttime()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
-        });
-        
-        
-   
-        // ----------------------------------------------------------¥H¤U¥Î¨Ó±Æ©wµLªk¿ï¾Üªº¤é´Á-----------------------------------------------------------
-
-        //      1.¥H¤U¬°¬Y¤@¤Ñ¤§«eªº¤é´ÁµLªk¿ï¾Ü
-        //      var somedate1 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-        
-        //      2.¥H¤U¬°¬Y¤@¤Ñ¤§«áªº¤é´ÁµLªk¿ï¾Ü
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-
-        //      3.¥H¤U¬°¨â­Ó¤é´Á¤§¥~ªº¤é´ÁµLªk¿ï¾Ü (¤]¥i«ö»İ­n´«¦¨¨ä¥L¤é´Á)
-        //      var somedate1 = new Date('2017-06-15');
-        //      var somedate2 = new Date('2017-06-25');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //		             ||
-        //		            date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-        
-</script>
 </html>

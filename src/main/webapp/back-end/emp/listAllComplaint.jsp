@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.complaint.model.*"%>
-<%-- ¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È --%>
 
 <%
 ComplaintService complaintSvc = new ComplaintService();
@@ -10,111 +10,160 @@ List<ComplaintVO> list = complaintSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 
-
 <html>
 <head>
-<title>©Ò¦³¥Ó¶D¸ê®Æ - listAllComplaint.jsp</title>
+    <meta charset="UTF-8">
+    <title>æ‰€æœ‰ç”³è¨´è³‡æ–™ - listAllComplaint.jsp</title>
 
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
+    <!-- å¼•å…¥ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
+        h3 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-top: 30px;
+        }
 
-<style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
+        .back-home button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-th, td {
-	padding: 5px;
-	text-align: center;
-}
-</style>
+        .back-home button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+
+        table td {
+            font-size: 14px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-edit {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-	<h4>¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È:</h4>
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>©Ò¦³¥Ó¶D¸ê®Æ - listAllComplaint.jsp</h3>
-				<h4>
-					<a href="select_page.jsp"><img
-						src="<%=request.getContextPath()%>/back-end/images/back1.gif"
-						width="100" height="32" border="0">¦^­º­¶</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+    <h3>æ‰€æœ‰ç”³è¨´è³‡æ–™</h3>
 
-	<table>
-		<tr>
-		<th>¥Ó¶D½s¸¹</th>
-<!-- 			<th>·|­û½s¸¹</th> -->
-<!-- 			<th>®×¥ó½s¸¹</th> -->
-			<th>¥Ó¶D®×¥ó¤º®e</th>
-			<th>¥Ó¶D¤é´Á</th>
-			<th>¥Ó¶Dª¬ºA</th>
-			<th>³B²zµ²ªG</th>
-			<th>­×§ï</th>
-			<th>§R°£</th>
-		</tr>
-		<%@ include file="page1.file"%>
-		<c:forEach var="complaintVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+    <div class="back-home">
+        <!-- ä½¿ç”¨ Bootstrap æŒ‰é’®å¹¶æ·»åŠ åŠ¨æ€æ•ˆæœ -->
+        <button onclick="window.location.href='select_page.jsp'">å›é¦–é </button>
+    </div>
 
-			<tr>
-				<td>${complaintVO.complaintId}</td>
-<%-- 				<td>${complaintVO.memberid}</td> --%>
-<%-- 				<td>${complaintVO.caseid}</td> --%>
-				<td>${complaintVO.complaintCon}</td>
-				<td>${complaintVO.complaintTime}</td>
-				<td>${complaintVO.complaintStatus}</td>
-				<td>${complaintVO.complaintResult}</td>
-				<td>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="­×§ï"> <input type="hidden"
-							name="complaintId" value="${complaintVO.complaintId}"> <input type="hidden"
-							name="action" value="getOne_For_Update">
-					</FORM>
-				</td>
-				<td>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="§R°£"> <input type="hidden"
-							name="complaintId" value="${complaintVO.complaintId}"> <input type="hidden"
-							name="action" value="delete">
-					</FORM>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<%@ include file="page2.file"%>
+    <table>
+        <thead>
+            <tr>
+                <th>ç”³è¨´ç·¨è™Ÿ</th>
+                <th>æœƒå“¡ç·¨è™Ÿ</th>
+                <th>æ¡ˆä»¶ç·¨è™Ÿ</th>
+                <th>ç”³è¨´æ¡ˆä»¶å…§å®¹</th>
+                <th>ç”³è¨´æ—¥æœŸ</th>
+                <th>ç”³è¨´ç‹€æ…‹</th>
+                <th>è™•ç†çµæœ</th>
+                <th>ä¿®æ”¹</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="complaintVO" items="${list}">
+                <tr>
+                    <td>${complaintVO.complaintId}</td>
+                    <td>${complaintVO.memberId}</td>
+                    <td>${complaintVO.caseId}</td>
+                    <td>${complaintVO.complaintCon}</td>
+                    <td>
+                        <fmt:formatDate value="${complaintVO.complaintTime}" pattern="yyyy-MM-dd"/>
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${complaintVO.complaintStatus == 0}">ç”³è¨´æˆåŠŸ</c:when>
+                            <c:when test="${complaintVO.complaintStatus == 1}">ç”³è¨´å¤±æ•—</c:when>
+                            <c:otherwise>æœªçŸ¥</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>${complaintVO.complaintResult}</td>
+                    <td>
+                        <form method="post" action="<%=request.getContextPath()%>/back-end/emp/emp.do">
+                            <input type="hidden" name="complaintId" value="${complaintVO.complaintId}">
+                            <input type="hidden" name="action" value="getOne_For_Update">
+                            <input type="submit" value="ä¿®æ”¹" class="btn-edit">
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+    <!-- å¼•å…¥ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

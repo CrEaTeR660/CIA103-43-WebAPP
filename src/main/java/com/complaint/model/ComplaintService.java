@@ -5,55 +5,55 @@ import java.util.List;
 
 public class ComplaintService {
 
-	private ComplaintDAO_interface dao;
+    private ComplaintDAO_interface dao;
 
-	public ComplaintService() {
-		dao = new ComplaintJDBCDAO();
-	}
-//Integer mem_id, Integer case_id,
-	public ComplaintVO addComplaint(Integer complaintId,  String complaintCon,
-			Timestamp complaintTime, Byte complaintStatus, String complaintResult) {
+    public ComplaintService() {
+        dao = new ComplaintDAO();
+    }
 
-		ComplaintVO complaintVO = new ComplaintVO();
+    // 新增申訴
+    public ComplaintVO addComplaint(Integer complaintId, Integer memberId, Integer caseId, String complaintCon,
+                                     Timestamp complaintTime, Byte complaintStatus, String complaintResult) {
 
-		complaintVO.setComplaintId(complaintId);
-//		complaintVO.setMemberid(mem_id);
-//		complaintVO.setCaseid(case_id);
-		complaintVO.setComplaintCon(complaintCon);
-		complaintVO.setComplaintTime(complaintTime);
-		complaintVO.setComplaintStatus(complaintStatus);
-		complaintVO.setComplaintResult(complaintResult);
-		dao.insert(complaintVO);
+        ComplaintVO complaintVO = new ComplaintVO();
 
-		return complaintVO;
-	}
-//Integer mem_id, Integer case_id,
-	public ComplaintVO updateComplaint(Integer complaintId, String complaintCon,
-			Timestamp complaintTime, Byte complaintStatus, String complaintResult) {
+        complaintVO.setComplaintId(complaintId);
+        complaintVO.setMemberId(memberId);
+        complaintVO.setCaseId(caseId);
+        complaintVO.setComplaintCon(complaintCon);
+        complaintVO.setComplaintTime(complaintTime);
+        complaintVO.setComplaintStatus(complaintStatus);
+        complaintVO.setComplaintResult(complaintResult);
+        dao.insert(complaintVO);
 
-		ComplaintVO complaintVO = new ComplaintVO();
+        return complaintVO;
+    }
 
-		complaintVO.setComplaintId(complaintId);
-//		complaintVO.setMemberid(mem_id);
-//		complaintVO.setCaseid(case_id);
-		complaintVO.setComplaintCon(complaintCon);
-		complaintVO.setComplaintTime(complaintTime);
-		complaintVO.setComplaintStatus(complaintStatus);
-		complaintVO.setComplaintResult(complaintResult);
-		dao.update(complaintVO);
+    // 更新申訴
+    public ComplaintVO updateComplaint(Integer complaintId, Integer memberId, Integer caseId, String complaintCon,
+                                        Timestamp complaintTime, Byte complaintStatus, String complaintResult) {
 
-		return complaintVO;
-	}
+        ComplaintVO complaintVO = new ComplaintVO();
 
-	public void deleteComplaint(Integer complaintId) {
-		dao.delete(complaintId);
-	}
+        complaintVO.setComplaintId(complaintId);
+        complaintVO.setMemberId(memberId);
+        complaintVO.setCaseId(caseId);
+        complaintVO.setComplaintCon(complaintCon);
+        complaintVO.setComplaintTime(complaintTime);
+        complaintVO.setComplaintStatus(complaintStatus);
+        complaintVO.setComplaintResult(complaintResult);
+        dao.update(complaintVO);
 
-	public ComplaintVO getOneComplaint(Integer complaintId) {
-		return dao.findByPrimaryKey(complaintId);
-	}
+        return complaintVO;
+    }
 
-	public List<ComplaintVO> getAll() {
-		return dao.getAll();
-	}
+    // 查詢單一申訴
+    public ComplaintVO getOneComplaint(Integer complaintId) {
+        return dao.findByPrimaryKey(complaintId);
+    }
+
+    // 查詢所有申訴
+    public List<ComplaintVO> getAll() {
+        return dao.getAll();
+    }
 }

@@ -4,9 +4,14 @@ import java.sql.Timestamp;
 
 public class ComplaintVO implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Integer complaintId;
-//	private Integer memberId;
-//	private Integer caseid;
+	private Integer memberId;
+	private Integer caseId;
 	private String complaintCon;
 	private Timestamp complaintTime;
 	private Byte complaintStatus;
@@ -16,10 +21,12 @@ public class ComplaintVO implements java.io.Serializable {
 		super();
 	}
 
-	public ComplaintVO(Integer complaintId, String complaintCon, Timestamp complaintTime, Byte complaintStatus,
+	public ComplaintVO(Integer complaintId,Integer memberId,Integer caseId, String complaintCon, Timestamp complaintTime, Byte complaintStatus,
 			String complaintResult) {
 		super();
 		this.complaintId = complaintId;
+		this.memberId = memberId;
+		this.caseId = caseId;
 		this.complaintCon = complaintCon;
 		this.complaintTime = complaintTime;
 		this.complaintStatus = complaintStatus;
@@ -64,6 +71,22 @@ public class ComplaintVO implements java.io.Serializable {
 
 	public void setComplaintResult(String complaintResult) {
 		this.complaintResult = complaintResult;
+	}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public Integer getCaseId() {
+		return caseId;
+	}
+
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
 	}
 
 

@@ -1,88 +1,158 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.*"%>
 <%@ page import="com.complaint.model.*"%>
-<%-- ¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È --%>
 
 <%
-ComplaintVO complaintVO = (ComplaintVO) request.getAttribute("ComplaintVO"); //ComplaintServlet.java(Concroller), ¦s¤JreqªºComplaintVOª«¥ó
+ComplaintService complaintSvc = new ComplaintService();
+List<ComplaintVO> list = complaintSvc.getAll();
+pageContext.setAttribute("list", list);
 %>
 
 <html>
 <head>
-<title>¥Ó¶D¸ê®Æ - listOneComplaint.jsp</title>
+<title>æ‰€æœ‰ç”³è¨´è³‡æ–™ - listAllComplaint.jsp</title>
+
+<!-- å¼•å…¥Bootstrapæ ·å¼ -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
+/* è‡ªå®šä¹‰é¡µé¢æ ·å¼ */
+body {
+    background-color: #f4f7fc;
+    font-family: 'Arial', sans-serif;
 }
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
 table {
-	width: 600px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+    border: 1px solid #CCCCFF;
 }
 
 th, td {
-	padding: 5px;
-	text-align: center;
+    padding: 10px;
+    text-align: center;
 }
+
+th {
+    background-color: #f2f2f2;
+}
+
+h3 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+button.btn {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+footer a {
+    color: #f39c12;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-	<h4>¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È:</h4>
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>¥Ó¶D¸ê®Æ - listOneComplaint.jsp</h3>
-				<h4>
-					<a href="select_page.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">¦^­º­¶</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<!-- é¡µé¢å®¹å™¨ -->
+<div class="container">
 
-	<table>
-		<tr>
-			<th>¥Ó¶D½s¸¹</th>
-<!-- 			<th>·|­û½s¸¹</th> -->
-<!-- 			<th>®×¥ó½s¸¹</th> -->
-			<th>¥Ó¶D®×¥ó¤º®e</th>
-			<th>¥Ó¶D¤é´Á</th>
-			<th>¥Ó¶Dª¬ºA</th>
-			<th>³B²zµ²ªG</th>
-		</tr>
-		<tr>
-			<td><%=complaintVO.getComplaintid()%></td>
-			<%-- 		<td><%=complaintVO.getComplaintcon()%></td> --%>
-			<%-- 		<td><%=complaintVO.getCaseid()%></td> --%>
-			<td><%=complaintVO.getComplaintcon()%></td>
-			<td><%=complaintVO.getComplainttime()%></td>
-			<td><%=complaintVO.getComplaintstatus()%></td>
-			<td><%=t(complaintVO.%></td>
-		</tr>
-	</table>
+    <h3>æ‰€æœ‰ç”³è¨´è³‡æ–™</h3>
+
+    <!-- è¿”å›é¦–é¡µæŒ‰é’® -->
+    <div class="mb-4 text-center">
+        <a href="select_page.jsp">
+            <button class="btn">å›é¦–é </button>
+        </a>
+    </div>
+
+    <!-- ç”³è¨´è³‡æ–™è¡¨æ ¼ -->
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>ç”³è¨´ç·¨è™Ÿ</th>
+                <th>æœƒå“¡ç·¨è™Ÿ</th>
+                <th>æ¡ˆä»¶ç·¨è™Ÿ</th>
+                <th>ç”³è¨´æ¡ˆä»¶å…§å®¹</th>
+                <th>ç”³è¨´æ—¥æœŸ</th>
+                <th>ç”³è¨´ç‹€æ…‹</th>
+                <th>è™•ç†çµæœ</th>
+                <th>ä¿®æ”¹</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="complaintVO" items="${list}">
+                <tr>
+                    <td>${complaintVO.complaintId}</td>
+                    <td>${complaintVO.memberId}</td>
+                    <td>${complaintVO.caseId}</td>
+                    <td>${complaintVO.complaintCon}</td>
+                    <td>
+                        <fmt:formatDate value="${complaintVO.complaintTime}" pattern="yyyy-MM-dd" />
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${complaintVO.complaintStatus == 0}">ç”³è¨´æˆåŠŸ</c:when>
+                            <c:when test="${complaintVO.complaintStatus == 1}">ç”³è¨´å¤±æ•—</c:when>
+                            <c:otherwise>æœªçŸ¥</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>${complaintVO.complaintResult}</td>
+                    <td>
+                        <form method="post" action="<%=request.getContextPath()%>/back-end/emp/emp.do">
+                            <button class="btn btn-sm btn-primary">ä¿®æ”¹</button>
+                            <input type="hidden" name="complaintId" value="${complaintVO.complaintId}">
+                            <input type="hidden" name="action" value="getOne_For_Update">
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<!-- é¡µè„š -->
+<footer>
+    <p>Â© 2024 æ‰€æœ‰ç‰ˆæ¬Šæ­¸å…¬å¸æ‰€æœ‰. <a href="#">éšç§æ”¿ç­–</a> | <a href="#">è¯ç¹«æˆ‘å€‘</a></p>
+</footer>
+
+<!-- å¼•å…¥Bootstrap JSå’ŒjQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
